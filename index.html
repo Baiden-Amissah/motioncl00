@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Motion Streetwear - Relentless hustle and discipline. Stay on motion. Shop our exclusive collection of clothes and caps.">
+  <meta name="theme-color" content="#121212">
+  <title>MOTION | Stay on Motion</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Oswald:wght@300;400;500;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap"
+    rel="stylesheet">
+
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* ── Payment Badges in Cart ── */
+    .payment-badges {
+      margin: 1rem 0;
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--color-border);
+      background-color: var(--color-card-bg);
+    }
+
+    .payment-badges-label {
+      font-family: var(--font-heading);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      color: var(--color-text-muted);
+      margin-bottom: 0.75rem;
+      text-align: center;
+    }
+
+    .payment-badges-grid {
+      display: flex;
+      gap: 0.45rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .payment-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      padding: 0.45rem 0.55rem;
+      border-radius: 6px;
+      min-width: 54px;
+      border: 1px solid transparent;
+    }
+
+    .payment-badge span {
+      font-size: 0.55rem;
+      font-family: var(--font-heading);
+      letter-spacing: 0.06em;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .payment-badge img {
+      width: 34px;
+      height: 22px;
+      object-fit: contain;
+    }
+
+    .payment-badge i {
+      font-size: 1.7rem;
+      line-height: 1;
+    }
+
+    .payment-badge.mtn {
+      background-color: #ffcc00;
+      border-color: #d4a900;
+      color: #1a1100;
+    }
+
+    .payment-badge.telecel {
+      background-color: #cc0000;
+      border-color: #990000;
+      color: #fff;
+    }
+
+    .payment-badge.airteltigo {
+      background-color: #003893;
+      border-color: #002a6e;
+      color: #fff;
+    }
+
+    .payment-badge.visa {
+      background-color: #1a1f71;
+      border-color: #111660;
+      color: #fff;
+    }
+
+    .payment-badge.visa i {
+      color: #fff;
+    }
+
+    .payment-badge.mastercard {
+      background-color: #1a1a1a;
+      border-color: #000;
+      color: #fff;
+    }
+
+    .payment-badge.mastercard i {
+      color: #eb001b;
+    }
+
+    /* ── Checkout payment method selector ── */
+    .payment-method-selector {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .pay-option-label {
+      flex: 1;
+      min-width: 70px;
+      border: 1px solid var(--color-border);
+      padding: 0.85rem 0.5rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+      border-radius: 4px;
+    }
+
+    .pay-option-label input[type="radio"] {
+      display: none;
+    }
+
+    .pay-option-label i {
+      font-size: 1.6rem;
+    }
+
+    .pay-option-label span {
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-align: center;
+    }
+
+    .pay-option-label:hover {
+      border-color: var(--color-text);
+    }
+
+    .pay-option-label.selected {
+      border-color: var(--color-text);
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .pay-fields {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .pay-fields.visible {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .checkout-secure-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 1.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .checkout-secure-header h3 {
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      margin: 0;
+    }
+
+    .checkout-secure-header i {
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+    }
+
+    select.form-select {
+      background-color: var(--color-card-bg);
+      border: 1px solid var(--color-border);
+      padding: 0.9rem 1.2rem;
+      font-size: 0.95rem;
+      color: var(--color-text);
+      width: 100%;
+      font-family: var(--font-body);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="nav-container">
+      <!-- Hamburger Button -->
+      <button class="hamburger-btn" id="hamburger-btn" aria-label="Open Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <a href="#" class="brand-logo" id="nav-brand">MOTION</a>
+
+      <div class="nav-actions">
+        <button class="cart-btn" id="cart-toggle-btn" aria-label="Shopping Cart">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Sidebar Overlay -->
+  <div class="mobile-sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- Mobile Sidebar -->
+  <aside class="mobile-sidebar" id="mobile-sidebar">
+    <a href="#" class="mobile-sidebar-link active" onclick="navigateTo('home'); closeSidebar()">
+      <i class="fa-solid fa-house"></i> HOME
+    </a>
+    <a href="#" class="mobile-sidebar-link" onclick="navigateTo('shop'); closeSidebar()">
+      <i class="fa-solid fa-bag-shopping"></i> SHOP
+    </a>
+    <a href="#" class="mobile-sidebar-link" onclick="navigateTo('story'); closeSidebar()">
+      <i class="fa-solid fa-book-open"></i> OUR STORY
+    </a>
+    <a href="#" class="mobile-sidebar-link" onclick="navigateTo('gallery'); closeSidebar()">
+      <i class="fa-solid fa-images"></i> GALLERY
+    </a>
+    <a href="#" class="mobile-sidebar-link" data-open="support" onclick="closeSidebar()">
+      <i class="fa-brands fa-whatsapp"></i> SUPPORT
+    </a>
+    <a href="#" class="mobile-sidebar-link" data-open="terms" onclick="closeSidebar()">
+      <i class="fa-solid fa-file-lines"></i> TERMS
+    </a>
+
+    <div class="mobile-sidebar-footer">
+      <p
+        style="color: var(--color-text-muted); font-family: var(--font-heading); font-size: 0.7rem; letter-spacing: 0.1em;">
+        FOLLOW US</p>
+      <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+        <a href="https://www.instagram.com/motionn_clo" target="_blank"><i class="fa-brands fa-instagram"
+            style="font-size: 1.2rem;"></i></a>
+        <a href="https://www.tiktok.com/@motionn.clo" target="_blank"><i class="fa-brands fa-tiktok"
+            style="font-size: 1.2rem;"></i></a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Container -->
+  <main id="main-content">
+
+    <!-- HOME PAGE -->
+    <section id="section-home" class="page-section active">
+      <!-- Hero Section -->
+      <div class="hero-banner">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <h1 class="hero-title">MOTION</h1>
+          <p class="hero-subtitle">JUST PROGRESS.</p>
+          <button class="btn btn-primary" onclick="navigateTo('shop')">SHOP THE COLLECTION</button>
+        </div>
+      </div>
+
+      <!-- Feature Grid -->
+      <div class="section-container">
+        <h2 class="section-title">FEATURED RELEASES</h2>
+        <div class="product-grid" id="featured-products">
+          <!-- Populated by JS -->
+        </div>
+        <div class="text-center mt-4">
+          <button class="btn btn-outline" onclick="navigateTo('shop')">VIEW ALL PRODUCTS</button>
+        </div>
+      </div>
+
+      <!-- Story Teaser -->
+      <div class="teaser-block">
+        <div class="teaser-content">
+          <span class="teaser-tag">ESTABLISHED FEB 22, 2025</span>
+          <h2 class="teaser-title">JUST MOTION.</h2>
+          <p class="teaser-text">
+            Motion represents more than apparel. It stands for constant forward movement pushing through pressure,
+            grinding with purpose, and chasing success on your own terms.
+          </p>
+          <button class="btn btn-link" onclick="navigateTo('story')">READ THE BRAND STORY <i
+              class="fa-solid fa-arrow-right-long"></i></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHOP PAGE -->
+    <section id="section-shop" class="page-section">
+      <div class="page-header">
+        <div class="section-container">
+          <h1 class="page-title">ARCHIVE</h1>
+          <p class="page-subtitle">Premium apparel & headwear engineered for relentless hustle.</p>
+        </div>
+      </div>
+
+      <div class="section-container">
+        <!-- Filters -->
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">ALL PRODUCTS</button>
+          <button class="filter-btn" data-filter="new">NEW ARRIVALS</button>
+          <button class="filter-btn" data-filter="apparel">APPAREL</button>
+          <button class="filter-btn" data-filter="headwear">HEADWEAR</button>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="product-grid" id="shop-products">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT PAGE -->
+    <section id="section-story" class="page-section">
+      <div class="story-hero">
+        <div class="story-hero-overlay"></div>
+        <video autoplay muted loop playsinline class="story-hero-video">
+          <source src="assets/about vid.mp4" type="video/mp4">
+        </video>
+        <div class="story-hero-content">
+        </div>
+      </div>
+
+      <div class="story-container">
+        <div class="story-rich-text">
+          <p class="story-highlight">
+            Motion was created on February 22, 2025 not just as a clothing brand, but as a statement. A brand fueled by
+            relentless hustle and the discipline to turn dreams into reality.
+          </p>
+
+          <p>
+            It was built in a season when everything felt heavy. Doubts were loud. Challenges were real. Quitting would
+            have been easy. But weakness was never an option. Even when life tried to slow things down, the mindset
+            never changed:
+          </p>
+
+          <blockquote class="story-quote">
+            "Stay on motion."
+          </blockquote>
+
+          <p>
+            Motion represents more than apparel. It stands for constant forward movement pushing through pressure,
+            grinding with purpose, and chasing success on your own terms. It's for those who refuse to sit on ideas and
+            instead take bold action toward the life they want.
+          </p>
+
+          <p>
+            Every piece carries the story of ambition, resilience, and the pursuit of freedom through hard work. It
+            reflects silent strength showing up daily even when no one sees the battles you're fighting. It's about
+            keeping your standards high when circumstances are low.
+          </p>
+
+          <div class="manifesto-list">
+            <div class="manifesto-item">
+              <span class="num">01</span>
+              <h3>Just progress.</h3>
+            </div>
+          </div>
+
+          <p class="story-highlight-2">
+            Our designs reflect that same energy:
+          </p>
+          <ul class="energy-list">
+            <li><strong>Clean</strong> and bold.</li>
+            <li><strong>Simple</strong> but powerful.</li>
+            <li><strong>Calm</strong> but relentless.</li>
+          </ul>
+
+          <p>
+            This brand is for people who move with purpose. <br>
+            For those who turn pain into fuel. <br>
+            For those who refuse to look like what they've been through.
+          </p>
+
+          <p class="story-footer-quote">
+            We didn't pause. <br>
+            We didn't fold. <br>
+            <strong>We stayed on motion.</strong>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY PAGE -->
+    <section id="section-gallery" class="page-section">
+      <div class="page-header">
+        <div class="section-container">
+          <h1 class="page-title">GALLERY</h1>
+          <p class="page-subtitle">A visual archive of the MOTION movement.</p>
+        </div>
+      </div>
+      <div class="section-container">
+        <div class="product-grid" id="gallery-products">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h2 class="footer-logo">MOTION</h2>
+        <p class="footer-tagline">STAY ON MOTION.</p>
+        <div class="social-icons">
+          <a href="https://www.instagram.com/motionn_clo" target="_blank" rel="noopener noreferrer"
+            aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="https://www.tiktok.com/@motionn.clo" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i
+              class="fa-brands fa-tiktok"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h3>DISCOVER</h3>
+        <ul>
+          <li><a href="#" onclick="navigateTo('shop')">Shop All</a></li>
+          <li><a href="#" onclick="navigateTo('shop', 'new')">New Arrivals</a></li>
+          <li><a href="#" onclick="navigateTo('shop', 'apparel')">Apparel</a></li>
+          <li><a href="#" onclick="navigateTo('shop', 'headwear')">Headwear</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3>BRAND</h3>
+        <ul>
+          <li><a href="#" onclick="navigateTo('story')">Our Story</a></li>
+          <li><a href="#" onclick="navigateTo('gallery')">Gallery</a></li>
+          <li><a href="#" data-open="support">Support</a></li>
+          <li><a href="#" data-open="terms">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div class="footer-newsletter">
+        <h3>JOIN THE MOTION</h3>
+        <p>Subscribe to receive exclusive drops, early access, and brand manifestos.</p>
+        <form class="newsletter-form">
+          <input type="email" placeholder="ENTER YOUR EMAIL" required aria-label="Email address">
+          <button type="submit" aria-label="Subscribe"><i class="fa-solid fa-arrow-right-long"></i></button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 MOTION CLOTHING. ALL RIGHTS RESERVED. POWERED BY RELENTLESS GRIND.</p>
+    </div>
+  </footer>
+
+  <!-- SHOPPING CART DRAWER -->
+  <div class="cart-drawer-overlay" id="cart-overlay"></div>
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-header">
+      <h2>YOUR CART (<span class="cart-count">0</span>)</h2>
+      <button class="close-btn" id="cart-close-btn" aria-label="Close Cart"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="cart-body" id="cart-items-container">
+      <!-- Populated by JS -->
+      <div class="empty-cart-message">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <p>YOUR BAG IS EMPTY</p>
+        <button class="btn btn-primary mt-3" onclick="closeCart(); navigateTo('shop')">START SHOPPING</button>
+      </div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-summary-row">
+        <span>SUBTOTAL</span>
+        <span class="cart-total">GHS 0.00</span>
+      </div>
+      <p class="cart-tax-note">Shipping calculated at checkout.</p>
+
+      <!-- ── PAYMENT BADGES ── -->
+      <div class="payment-badges">
+        <p class="payment-badges-label">WE ACCEPT</p>
+        <div class="payment-badges-grid">
+
+          <div class="payment-badge mtn">
+            <img src="assets/mtn.png" alt="MTN Mobile Money"
+              onerror="this.style.display='none'; this.nextElementSibling.style.fontSize='1rem';">
+            <span>MTN<br>MoMo</span>
+          </div>
+
+          <div class="payment-badge telecel">
+            <img src="assets/telecel.png" alt="Telecel Cash"
+              onerror="this.style.display='none'; this.nextElementSibling.style.fontSize='1rem';">
+            <span>Telecel<br>Cash</span>
+          </div>
+
+          <div class="payment-badge airteltigo">
+            <img src="assets/airteltigo.png" alt="AirtelTigo Money"
+              onerror="this.style.display='none'; this.nextElementSibling.style.fontSize='1rem';">
+            <span>AT<br>Money</span>
+          </div>
+
+          <div class="payment-badge visa">
+            <i class="fa-brands fa-cc-visa" aria-hidden="true"></i>
+            <span>Visa</span>
+          </div>
+
+          <div class="payment-badge mastercard">
+            <i class="fa-brands fa-cc-mastercard" aria-hidden="true"></i>
+            <span>Mastercard</span>
+          </div>
+
+        </div>
+      </div>
+      <!-- ── END PAYMENT BADGES ── -->
+
+      <button class="btn btn-primary btn-block" id="checkout-trigger-btn" disabled>PROCEED TO CHECKOUT</button>
+    </div>
+  </div>
+
+  <!-- PRODUCT DETAIL QUICK VIEW MODAL -->
+  <div class="modal-overlay" id="product-modal">
+    <div class="modal-content">
+      <button class="close-btn modal-close" aria-label="Close details"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-grid" id="modal-product-detail">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKOUT MODAL -->
+  <div class="modal-overlay" id="checkout-modal">
+    <div class="modal-content checkout-modal-content">
+      <button class="close-btn modal-close" id="checkout-close-btn" aria-label="Close checkout"><i
+          class="fa-solid fa-xmark"></i></button>
+      <div class="checkout-grid">
+
+        <!-- LEFT: FORM -->
+        <div class="checkout-form-side">
+          <h2>CHECKOUT</h2>
+          <form id="checkout-form">
+
+            <!-- Contact -->
+            <div class="form-group-row">
+              <div class="form-group">
+                <label for="c-first-name">FIRST NAME</label>
+                <input type="text" id="c-first-name" required>
+              </div>
+              <div class="form-group">
+                <label for="c-last-name">LAST NAME</label>
+                <input type="text" id="c-last-name" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="c-email">EMAIL ADDRESS</label>
+              <input type="email" id="c-email" required>
+            </div>
+
+            <!-- Shipping -->
+            <div class="form-group">
+              <label for="c-address">SHIPPING ADDRESS</label>
+              <input type="text" id="c-address" placeholder="Street / Area / Landmark" required>
+            </div>
+            <div class="form-group-row">
+              <div class="form-group">
+                <label for="c-city">CITY</label>
+                <input type="text" id="c-city" required>
+              </div>
+              <div class="form-group">
+                <label for="c-region">REGION</label>
+                <select id="c-region" class="form-select" required>
+                  <option value="">Select Region</option>
+                  <option>Greater Accra</option>
+                  <option>Ashanti</option>
+                  <option>Western</option>
+                  <option>Central</option>
+                  <option>Eastern</option>
+                  <option>Northern</option>
+                  <option>Volta</option>
+                  <option>Upper East</option>
+                  <option>Upper West</option>
+                  <option>Brong-Ahafo</option>
+                  <option>Oti</option>
+                  <option>Savannah</option>
+                  <option>North East</option>
+                  <option>Bono East</option>
+                  <option>Ahafo</option>
+                  <option>Western North</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Payment Method -->
+            <div class="checkout-secure-header mt-4">
+              <h3>PAYMENT METHOD</h3>
+              <i class="fa-solid fa-lock"></i>
+            </div>
+
+            <!-- Method Picker -->
+            <div class="payment-method-selector" id="pay-method-selector">
+
+              <label class="pay-option-label" id="opt-mtn" onclick="selectCheckoutPayment('mtn', this)">
+                <input type="radio" name="pay_method" value="mtn">
+                <i class="fa-solid fa-mobile-screen" style="color:#ffcc00;"></i>
+                <span>MTN MoMo</span>
+              </label>
+
+              <label class="pay-option-label" id="opt-telecel" onclick="selectCheckoutPayment('telecel', this)">
+                <input type="radio" name="pay_method" value="telecel">
+                <i class="fa-solid fa-mobile-screen" style="color:#cc0000;"></i>
+                <span>Telecel</span>
+              </label>
+
+              <label class="pay-option-label" id="opt-at" onclick="selectCheckoutPayment('at', this)">
+                <input type="radio" name="pay_method" value="at">
+                <i class="fa-solid fa-mobile-screen" style="color:#003893;"></i>
+                <span>AT Money</span>
+              </label>
+
+              <label class="pay-option-label" id="opt-visa" onclick="selectCheckoutPayment('visa', this)">
+                <input type="radio" name="pay_method" value="visa">
+                <i class="fa-brands fa-cc-visa" style="color:#1a1f71;"></i>
+                <span>Visa</span>
+              </label>
+
+              <label class="pay-option-label" id="opt-mastercard" onclick="selectCheckoutPayment('mastercard', this)">
+                <input type="radio" name="pay_method" value="mastercard">
+                <i class="fa-brands fa-cc-mastercard" style="color:#eb001b;"></i>
+                <span>Mastercard</span>
+              </label>
+
+            </div>
+
+            <!-- MoMo Fields (MTN / Telecel / AT) -->
+            <div class="pay-fields" id="pay-fields-momo">
+              <div class="form-group">
+                <label>MOBILE MONEY NUMBER</label>
+                <input type="tel" id="momo-number" placeholder="024 000 0000">
+              </div>
+            </div>
+
+            <!-- Card Fields (Visa / Mastercard) -->
+            <div class="pay-fields" id="pay-fields-card">
+              <div class="form-group">
+                <label>CARD NUMBER</label>
+                <input type="text" id="card-number" placeholder="0000 0000 0000 0000" maxlength="19">
+              </div>
+              <div class="form-group-row">
+                <div class="form-group">
+                  <label>EXPIRY DATE</label>
+                  <input type="text" id="card-expiry" placeholder="MM / YY" maxlength="7">
+                </div>
+                <div class="form-group">
+                  <label>CVV</label>
+                  <input type="text" id="card-cvv" placeholder="•••" maxlength="3">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>NAME ON CARD</label>
+                <input type="text" id="card-name" placeholder="Full name">
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block mt-4" id="place-order-btn">
+              PLACE ORDER — <span class="checkout-total-val">GHS 0.00</span>
+            </button>
+
+          </form>
+        </div>
+
+        <!-- RIGHT: ORDER SUMMARY -->
+        <div class="checkout-summary-side">
+          <h3>ORDER SUMMARY</h3>
+          <div class="checkout-summary-items" id="checkout-summary-items">
+            <!-- Populated by JS -->
+          </div>
+          <hr class="checkout-divider">
+          <div class="checkout-totals">
+            <div class="summary-row">
+              <span>SUBTOTAL</span>
+              <span class="checkout-subtotal-val">GHS 0.00</span>
+            </div>
+            <div class="summary-row">
+              <span>SHIPPING</span>
+              <span class="shipping-cost-val">FREE</span>
+            </div>
+            <hr>
+            <div class="summary-row total-row">
+              <span>TOTAL</span>
+              <span class="checkout-total-val">GHS 0.00</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ORDER SUCCESS SCREEN -->
+  <div class="modal-overlay" id="success-modal">
+    <div class="modal-content success-modal-content text-center">
+      <div class="success-icon-wrap">
+        <div class="success-circle">
+          <i class="fa-solid fa-check"></i>
+        </div>
+      </div>
+      <h2>ORDER PLACED.</h2>
+      <p class="success-order-id">ORDER #<span id="order-number">M-12493</span></p>
+      <p class="success-msg">
+        Welcome to the movement. Your order is being processed. <br>
+        We didn't pause. We didn't fold. We stayed on motion.
+      </p>
+      <button class="btn btn-primary mt-4" id="success-close-btn">CONTINUE THE JOURNEY</button>
+    </div>
+  </div>
+
+  <!-- SUPPORT MODAL -->
+  <div class="modal-overlay" id="support-modal">
+    <div class="modal-content" style="max-width: 480px;">
+      <button class="close-btn modal-close" id="support-close-btn" aria-label="Close Support"><i
+          class="fa-solid fa-xmark"></i></button>
+      <div style="text-align: center; padding: 2.5rem 2rem;">
+        <i class="fa-brands fa-whatsapp"
+          style="font-size: 2.5rem; color: #25D366; margin-bottom: 1rem; display: block;"></i>
+        <h2 style="font-family: var(--font-heading); letter-spacing: 0.15em; margin-bottom: 0.75rem;">WE'VE GOT YOU</h2>
+        <p style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 0.5rem;">
+          Got a question about your order, sizing, or anything MOTION? Hit us directly on WhatsApp — we respond fast.
+        </p>
+        <p style="color: var(--color-text-muted); font-size: 0.8rem; margin-bottom: 2rem;">
+          ⏱ Typical response time: <strong style="color: var(--color-text);">under 2 hours</strong>
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <a href="https://wa.me/233204754731?text=Good%20day%2C%20I%20am%20reaching%20out%20regarding%20a%20MOTION%20Streetwear%20enquiry%20and%20would%20appreciate%20your%20assistance."
+            target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-block"
+            style="display: flex; align-items: center; justify-content: center; gap: 0.6rem; text-decoration: none;">
+            <i class="fa-brands fa-whatsapp"></i>
+            CHAT — TEAM MEMBER 1
+          </a>
+          <a href="https://wa.me/233537174500?text=Good%20day%2C%20I%20am%20reaching%20out%20regarding%20a%20MOTION%20Streetwear%20enquiry%20and%20would%20appreciate%20your%20assistance."
+            target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-block"
+            style="display: flex; align-items: center; justify-content: center; gap: 0.6rem; text-decoration: none;">
+            <i class="fa-brands fa-whatsapp"></i>
+            CHAT — TEAM MEMBER 2
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TERMS OF SERVICE MODAL -->
+  <div class="modal-overlay" id="terms-modal">
+    <div class="modal-content" style="max-width: 600px; max-height: 85vh; overflow-y: auto;">
+      <button class="close-btn modal-close" id="terms-close-btn" aria-label="Close Terms"><i
+          class="fa-solid fa-xmark"></i></button>
+      <div style="padding: 2.5rem 2rem;">
+        <h2 style="font-family: var(--font-heading); letter-spacing: 0.15em; margin-bottom: 0.5rem;">TERMS OF SERVICE
+        </h2>
+        <p style="color: var(--color-text-muted); font-size: 0.78rem; margin-bottom: 2rem;">Last updated: June 2025</p>
+
+        <div
+          style="display: flex; flex-direction: column; gap: 1.5rem; color: var(--color-text-muted); font-size: 0.88rem; line-height: 1.8;">
+
+          <div>
+            <h4
+              style="color: var(--color-text); font-family: var(--font-heading); letter-spacing: 0.1em; margin-bottom: 0.4rem;">
+              1. ORDERS & PAYMENTS</h4>
+            <p>All orders placed on MOTION Streetwear are subject to availability and payment confirmation. Prices are
+              listed in Ghana Cedis (GHS). We accept MoMo, Visa, and Mastercard. Your order is only confirmed once
+              payment has been successfully processed.</p>
+          </div>
+
+          <div>
+            <h4
+              style="color: var(--color-text); font-family: var(--font-heading); letter-spacing: 0.1em; margin-bottom: 0.4rem;">
+              2. DELIVERY</h4>
+            <p>Orders are processed within 1–3 business days. Delivery timelines vary by location. MOTION is not liable
+              for delays caused by third-party courier services. You will be contacted via WhatsApp once your order is
+              dispatched.</p>
+          </div>
+
+          <div>
+            <h4
+              style="color: var(--color-text); font-family: var(--font-heading); letter-spacing: 0.1em; margin-bottom: 0.4rem;">
+              3. RETURNS & EXCHANGES</h4>
+            <p>We accept exchanges within 7 days of delivery for unworn, unwashed items in their original condition. We
+              do not offer refunds — only size exchanges or store credit. Items marked as final sale are not eligible
+              for exchange. To initiate an exchange, contact us on WhatsApp.</p>
+          </div>
+
+          <div>
+            <h4
+              style="color: var(--color-text); font-family: var(--font-heading); letter-spacing: 0.1em; margin-bottom: 0.4rem;">
+              4. CUSTOMER DATA & PRIVACY</h4>
+            <p>Any information you provide during checkout is used solely to process and deliver your order. We do not
+              sell or share your personal data with third parties. Payment details are handled securely through our
+              payment partners and are never stored on our servers.</p>
+          </div>
+
+          <div>
+            <h4
+              style="color: var(--color-text); font-family: var(--font-heading); letter-spacing: 0.1em; margin-bottom: 0.4rem;">
+              5. INTELLECTUAL PROPERTY</h4>
+            <p>All MOTION branding, graphics, photography, and content are the exclusive property of MOTION Streetwear.
+              Unauthorized reproduction or use of any MOTION assets is strictly prohibited.</p>
+          </div>
+
+          <div>
+            <h4
+              style="color: var(--color-text); font-family: var(--font-heading); letter-spacing: 0.1em; margin-bottom: 0.4rem;">
+              6. CONTACT</h4>
+            <p>For any concerns, reach us directly on WhatsApp:</p>
+            <p style="margin-top: 0.4rem;">Team Member 1: <strong style="color: var(--color-text);">0204754731</strong>
+            </p>
+            <p>Team Member 2: <strong style="color: var(--color-text);">0537174500</strong></p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script File -->
+  <script src="app.js"></script>
+
+  <script>
+    /* Payment method selector for checkout modal */
+    function selectCheckoutPayment(method, labelEl) {
+      /* Deselect all */
+      document.querySelectorAll(".pay-option-label").forEach(l => l.classList.remove("selected"));
+      /* Hide all fields */
+      document.querySelectorAll(".pay-fields").forEach(f => f.classList.remove("visible"));
+
+      /* Select clicked */
+      labelEl.classList.add("selected");
+      labelEl.querySelector("input[type='radio']").checked = true;
+
+      /* Show relevant fields */
+      if (method === "mtn" || method === "telecel" || method === "at") {
+        document.getElementById("pay-fields-momo").classList.add("visible");
+      } else {
+        document.getElementById("pay-fields-card").classList.add("visible");
+      }
+    }
+  </script>
+
+</body>
+
+</html>
