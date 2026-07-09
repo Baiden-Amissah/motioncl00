@@ -163,27 +163,6 @@
       background-color: rgba(255, 255, 255, 0.05);
     }
 
-    .pay-fields {
-      display: none;
-      animation: fadeIn 0.25s ease;
-    }
-
-    .pay-fields.visible {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(4px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
     .checkout-secure-header {
       display: flex;
       align-items: center;
@@ -653,36 +632,10 @@
 
             </div>
 
-            <!-- MoMo Fields (MTN / Telecel / AT) -->
-            <div class="pay-fields" id="pay-fields-momo">
-              <div class="form-group">
-                <label>MOBILE MONEY NUMBER</label>
-                <input type="tel" id="momo-number" placeholder="024 000 0000">
-              </div>
-            </div>
-
-            <!-- Card Fields (Visa / Mastercard) -->
-            <div class="pay-fields" id="pay-fields-card">
-              <div class="form-group">
-                <label>CARD NUMBER</label>
-                <input type="text" id="card-number" placeholder="0000 0000 0000 0000" maxlength="19">
-              </div>
-              <div class="form-group-row">
-                <div class="form-group">
-                  <label>EXPIRY DATE</label>
-                  <input type="text" id="card-expiry" placeholder="MM / YY" maxlength="7">
-                </div>
-                <div class="form-group">
-                  <label>CVV</label>
-                  <input type="text" id="card-cvv" placeholder="•••" maxlength="3">
-                </div>
-              </div>
-              <div class="form-group">
-                <label>NAME ON CARD</label>
-                <input type="text" id="card-name" placeholder="Full name">
-              </div>
-            </div>
-
+            <p style="color: var(--color-text-muted); font-size: 0.78rem; margin: -0.5rem 0 1rem;">
+              <i class="fa-solid fa-lock" style="margin-right: 0.3rem;"></i>
+              You'll enter your card or Mobile Money PIN securely on the next screen, powered by Paystack.
+            </p>
             <button type="submit" class="btn btn-primary btn-block mt-4" id="place-order-btn">
               PLACE ORDER — <span class="checkout-total-val">GHS 0.00</span>
             </button>
@@ -841,29 +794,11 @@
     </div>
   </div>
 
-  <!-- Script File -->
+  <!-- Paystack Inline JS -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+
+  <!-- App Script -->
   <script src="app.js"></script>
-
-  <script>
-    /* Payment method selector for checkout modal */
-    function selectCheckoutPayment(method, labelEl) {
-      /* Deselect all */
-      document.querySelectorAll(".pay-option-label").forEach(l => l.classList.remove("selected"));
-      /* Hide all fields */
-      document.querySelectorAll(".pay-fields").forEach(f => f.classList.remove("visible"));
-
-      /* Select clicked */
-      labelEl.classList.add("selected");
-      labelEl.querySelector("input[type='radio']").checked = true;
-
-      /* Show relevant fields */
-      if (method === "mtn" || method === "telecel" || method === "at") {
-        document.getElementById("pay-fields-momo").classList.add("visible");
-      } else {
-        document.getElementById("pay-fields-card").classList.add("visible");
-      }
-    }
-  </script>
 
 </body>
 

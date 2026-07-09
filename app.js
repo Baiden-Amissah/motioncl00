@@ -178,6 +178,19 @@ const PRODUCTS = [
 
 ];
 
+// Paystack Configuration
+// NOTE: This is your LIVE public key — real transactions will be charged.
+// Switch to your pk_test_... key while you're still testing the flow.
+const PAYSTACK_PUBLIC_KEY = "pk_live_2edaf67ecb1be342813419cf2e1a495f4a016c0f";
+let selectedPaymentMethod = "";
+
+function selectCheckoutPayment(method, labelEl) {
+  selectedPaymentMethod = method;
+  document.querySelectorAll(".pay-option-label").forEach(l => l.classList.remove("selected"));
+  labelEl.classList.add("selected");
+  labelEl.querySelector("input[type='radio']").checked = true;
+}
+
 // 2. Application State
 let cart = [];
 let activePage = "home";
@@ -723,6 +736,9 @@ function closeCart() {
 }
 
 // 9. Checkout Flow
+// NOTE: The real checkout form (name/email/address/payment method picker) already
+// lives in index.html — we do NOT overwrite elCheckoutForm.innerHTML here anymore.
+// We just populate the order summary and reset the payment-method selection.
 function openCheckoutModal() {
   if (cart.length === 0) return;
 
@@ -746,108 +762,12 @@ function openCheckoutModal() {
     val.textContent = `GHS ${subTotal.toFixed(2)}`;
   });
 
-  // Replace entire form content with payment only
-  elCheckoutForm.innerHTML = `
-    <div class="payment-header">
-      <h3>PAYMENT METHOD</h3>
-    </div>
-
-    <div class="payment-methods" style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
-      <label class="payment-option" style="
-        flex: 1; border: 1px solid var(--color-border); padding: 1rem;
-        cursor: pointer; display: flex; flex-direction: column;
-        align-items: center; gap: 0.5rem; transition: border-color var(--transition-fast);
-      ">
-        <input type="radio" name="payment_method" value="momo" style="display: none;" onchange="selectPaymentMethod('momo')">
-        <i class="fa-solid fa-mobile-screen" style="font-size: 1.5rem;"></i>
-        <span style="font-family: var(--font-heading); font-size: 0.85rem; letter-spacing: 0.1em;">MOMO</span>
-      </label>
-
-      <label class="payment-option" style="
-        flex: 1; border: 1px solid var(--color-border); padding: 1rem;
-        cursor: pointer; display: flex; flex-direction: column;
-        align-items: center; gap: 0.5rem; transition: border-color var(--transition-fast);
-      ">
-        <input type="radio" name="payment_method" value="visa" style="display: none;" onchange="selectPaymentMethod('visa')">
-        <i class="fa-brands fa-cc-visa" style="font-size: 1.5rem;"></i>
-        <span style="font-family: var(--font-heading); font-size: 0.85rem; letter-spacing: 0.1em;">VISA</span>
-      </label>
-
-      <label class="payment-option" style="
-        flex: 1; border: 1px solid var(--color-border); padding: 1rem;
-        cursor: pointer; display: flex; flex-direction: column;
-        align-items: center; gap: 0.5rem; transition: border-color var(--transition-fast);
-      ">
-        <input type="radio" name="payment_method" value="mastercard" style="display: none;" onchange="selectPaymentMethod('mastercard')">
-        <i class="fa-brands fa-cc-mastercard" style="font-size: 1.5rem;"></i>
-        <span style="font-family: var(--font-heading); font-size: 0.85rem; letter-spacing: 0.1em;">MASTERCARD</span>
-      </label>
-    </div>
-
-    <div id="momo-fields" class="payment-fields" style="display: none;">
-      <div class="form-group">
-        <label>MOMO NUMBER</label>
-        <input type="tel" placeholder="024 000 0000" id="momo-number">
-      </div>
-      <div class="form-group">
-        <label>NETWORK</label>
-        <select id="momo-network" style="
-          background-color: var(--color-card-bg); border: 1px solid var(--color-border);
-          padding: 0.9rem 1.2rem; font-size: 0.95rem; color: var(--color-text); width: 100%;
-        ">
-          <option value="">Select Network</option>
-          <option value="mtn">MTN Mobile Money</option>
-          <option value="vodafone">Vodafone Cash</option>
-          <option value="airteltigo">AirtelTigo Money</option>
-        </select>
-      </div>
-    </div>
-
-    <div id="card-fields" class="payment-fields" style="display: none;">
-      <div class="form-group">
-        <label>CARD NUMBER</label>
-        <input type="text" placeholder="0000 0000 0000 0000" id="card-number" maxlength="19">
-      </div>
-      <div class="form-group-row">
-        <div class="form-group">
-          <label>EXPIRY DATE</label>
-          <input type="text" placeholder="MM / YY" id="card-expiry" maxlength="7">
-        </div>
-        <div class="form-group">
-          <label>CVV</label>
-          <input type="text" placeholder="000" id="card-cvv" maxlength="3">
-        </div>
-      </div>
-      <div class="form-group">
-        <label>NAME ON CARD</label>
-        <input type="text" placeholder="Full name">
-      </div>
-    </div>
-
-    <button type="submit" class="btn btn-primary btn-block mt-4" id="place-order-btn">
-      PLACE ORDER
-    </button>
-  `;
+  // Reset payment method selection each time checkout opens
+  selectedPaymentMethod = "";
+  document.querySelectorAll(".pay-option-label").forEach(l => l.classList.remove("selected"));
 
   elCheckoutModal.classList.add("active");
   document.body.style.overflow = "hidden";
-}
-
-function selectPaymentMethod(method) {
-  document.querySelectorAll(".payment-option").forEach(opt => {
-    opt.style.borderColor = "var(--color-border)";
-  });
-
-  const selected = document.querySelector(`input[value="${method}"]`).parentElement;
-  selected.style.borderColor = "var(--color-text)";
-
-  document.querySelectorAll(".payment-fields").forEach(f => f.style.display = "none");
-
-  if (method === "momo") {
-    document.getElementById("momo-fields").style.display = "block";
-  } else {
-    document.getElementById("card-fields").style.display = "block";
-  }
 }
 
 function closeCheckoutModal() {
@@ -858,83 +778,103 @@ function closeCheckoutModal() {
 function handleCheckoutSubmit(e) {
   e.preventDefault();
 
-  // --- MoMo Validation ---
-  const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
-  if (!selectedMethod) {
+  const firstName = document.getElementById("c-first-name").value.trim();
+  const lastName = document.getElementById("c-last-name").value.trim();
+  const email = document.getElementById("c-email").value.trim();
+  const address = document.getElementById("c-address").value.trim();
+  const city = document.getElementById("c-city").value.trim();
+  const region = document.getElementById("c-region").value;
+
+  if (!firstName || !lastName) {
+    alert("Please enter your full name.");
+    return;
+  }
+  if (!/^\S+@\S+\.\S+$/.test(email)) {
+    alert("Please enter a valid email address.");
+    document.getElementById("c-email").focus();
+    return;
+  }
+  if (!address) {
+    alert("Please enter your shipping address.");
+    document.getElementById("c-address").focus();
+    return;
+  }
+  if (!city) {
+    alert("Please enter your city.");
+    document.getElementById("c-city").focus();
+    return;
+  }
+  if (!region) {
+    alert("Please select your region.");
+    document.getElementById("c-region").focus();
+    return;
+  }
+  if (!selectedPaymentMethod) {
     alert("Please select a payment method.");
     return;
   }
 
-  const method = selectedMethod.value;
+  const subTotal = cart.reduce((total, item) => total + (item.price * item.qty), 0);
+  const amountInPesewas = Math.round(subTotal * 100); // Paystack expects the smallest currency unit
 
-  if (method === "momo") {
-    const momoInput = document.getElementById("momo-number");
-    const momoVal = momoInput.value.replace(/\s/g, "");
-    if (!/^\d{10}$/.test(momoVal)) {
-      momoInput.style.borderColor = "red";
-      alert("Please enter a valid 10-digit MoMo number (numbers only).");
-      momoInput.focus();
-      return;
-    }
-    momoInput.style.borderColor = "";
-  }
+  const channels = (selectedPaymentMethod === "visa" || selectedPaymentMethod === "mastercard")
+    ? ["card"]
+    : ["mobile_money"];
 
-  // --- Card Validation ---
-  if (method === "visa" || method === "mastercard") {
-    const cardNumInput = document.getElementById("card-number");
-    const cardVal = cardNumInput.value.replace(/\s/g, "");
-    if (!/^\d{16}$/.test(cardVal)) {
-      cardNumInput.style.borderColor = "red";
-      alert("Please enter a valid 16-digit card number (numbers only).");
-      cardNumInput.focus();
-      return;
-    }
-    cardNumInput.style.borderColor = "";
-
-    const expiryInput = document.getElementById("card-expiry");
-    const expiryVal = expiryInput.value.trim();
-    if (!/^\d{2}\s?\/\s?\d{2}$/.test(expiryVal)) {
-      expiryInput.style.borderColor = "red";
-      alert("Please enter a valid expiry date in MM / YY format.");
-      expiryInput.focus();
-      return;
-    }
-    expiryInput.style.borderColor = "";
-
-    const cvvInput = document.getElementById("card-cvv");
-    const cvvVal = cvvInput.value.trim();
-    if (!/^\d{3}$/.test(cvvVal)) {
-      cvvInput.style.borderColor = "red";
-      alert("Please enter a valid 3-digit CVV.");
-      cvvInput.focus();
-      return;
-    }
-    cvvInput.style.borderColor = "";
-  }
-
-  // --- All Good, Process Order ---
   const placeBtn = document.getElementById("place-order-btn");
-  const origText = placeBtn.textContent;
-  placeBtn.textContent = "PROCESSING...";
+  const origBtnHTML = placeBtn.innerHTML;
+  placeBtn.textContent = "OPENING SECURE PAYMENT...";
   placeBtn.disabled = true;
 
-  setTimeout(() => {
-    const orderNum = "M-" + Math.floor(10000 + Math.random() * 90000);
-    elOrderNumberLabel.textContent = orderNum;
+  const orderRef = "MOTION-" + Math.floor(Date.now() / 1000) + "-" + Math.floor(Math.random() * 10000);
 
-    cart = [];
-    saveCartToStorage();
-    updateCartUI();
+  const handler = PaystackPop.setup({
+    key: PAYSTACK_PUBLIC_KEY,
+    email: email,
+    amount: amountInPesewas,
+    currency: "GHS",
+    channels: channels,
+    ref: orderRef,
+    metadata: {
+      custom_fields: [
+        { display_name: "Customer Name", variable_name: "customer_name", value: firstName + " " + lastName },
+        { display_name: "Shipping Address", variable_name: "shipping_address", value: address + ", " + city + ", " + region }
+      ]
+    },
+    callback: function (response) {
+      handlePaymentSuccess(response.reference);
+    },
+    onClose: function () {
+      placeBtn.innerHTML = origBtnHTML;
+      placeBtn.disabled = false;
+    }
+  });
 
-    closeCheckoutModal();
-    elSuccessModal.classList.add("active");
-    document.body.style.overflow = "hidden";
-
-    placeBtn.textContent = origText;
-    placeBtn.disabled = false;
-    elCheckoutForm.reset();
-  }, 2000);
+  handler.openIframe();
 }
+
+function handlePaymentSuccess(reference) {
+  elOrderNumberLabel.textContent = reference;
+
+  cart = [];
+  saveCartToStorage();
+  updateCartUI();
+
+  closeCheckoutModal();
+  elSuccessModal.classList.add("active");
+  document.body.style.overflow = "hidden";
+
+  elCheckoutForm.reset();
+  selectedPaymentMethod = "";
+  document.querySelectorAll(".pay-option-label").forEach(l => l.classList.remove("selected"));
+
+  const placeBtn = document.getElementById("place-order-btn");
+  if (placeBtn) {
+    placeBtn.disabled = false;
+    placeBtn.innerHTML = `PLACE ORDER — <span class="checkout-total-val">GHS 0.00</span>`;
+  }
+}
+
 function closeSuccessModal() {
   elSuccessModal.classList.remove("active");
   document.body.style.overflow = "";
