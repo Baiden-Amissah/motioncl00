@@ -179,8 +179,29 @@ const PRODUCTS = [
 ];
 
 // Images shown in the Shop's "NEW ARRIVALS" filter until real new-arrival
-// products are added. Swap these paths to real teaser/mockup images anytime.
-const NEW_ARRIVALS_TEASER_IMAGES = ["assets/prettygirl w.jpg", "assets/prettygirl b.jpg"];
+// products are added. Swap/add entries here anytime — each has its own caption.
+const NEW_ARRIVALS_TEASERS = [
+  {
+    image: "assets/prettygirl w.jpg",
+    name: "Next Drop Loading",
+    caption: "A softer side of MOTION, cut for the days you move at your own pace. Details still under wraps."
+  },
+  {
+    image: "assets/prettygirl b.jpg",
+    name: "Next Drop Loading",
+    caption: "Same energy, deeper tone. The black edition of the next release is already in the works."
+  },
+  {
+    image: "assets/crop white.jpg",
+    name: "Crop Edition (White)",
+    caption: "A cropped silhouette joins the lineup — clean white base, signature branding still to be revealed."
+  },
+  {
+    image: "assets/crop black.jpg",
+    name: "Crop Edition (Black)",
+    caption: "The cropped fit in black. Built for the same relentless movement, sized down and locked in."
+  }
+];
 
 // Paystack Configuration
 // NOTE: This is your LIVE public key — real transactions will be charged.
@@ -368,16 +389,16 @@ function generateFeaturedCardHTML(product) {
 // Placeholder cards shown in the "NEW ARRIVALS" shop filter until real
 // new-arrival products exist. Not clickable — just a teaser + tag.
 function generateComingSoonCardHTML() {
-  return NEW_ARRIVALS_TEASER_IMAGES.map(imgUrl => `
+  return NEW_ARRIVALS_TEASERS.map(teaser => `
     <div class="product-card coming-soon-card">
       <div class="product-image-wrap">
-        <img src="${imgUrl}" alt="New Arrivals — Coming Soon" class="product-image" loading="lazy">
+        <img src="${teaser.image}" alt="${teaser.name} — Coming Soon" class="product-image" loading="lazy">
         <span class="product-badge coming-soon-badge">COMING SOON</span>
       </div>
       <div class="product-info">
         <span class="product-category">new arrivals</span>
-        <h3 class="product-name">Next Drop Loading</h3>
-        <p class="coming-soon-text">New pieces are on the way. Check back soon or join the newsletter to get notified first.</p>
+        <h3 class="product-name">${teaser.name}</h3>
+        <p class="coming-soon-text">${teaser.caption}</p>
       </div>
     </div>
   `).join("");
