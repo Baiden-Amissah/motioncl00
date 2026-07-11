@@ -178,6 +178,10 @@ const PRODUCTS = [
 
 ];
 
+// Images shown in the Shop's "NEW ARRIVALS" filter until real new-arrival
+// products are added. Swap these paths to real teaser/mockup images anytime.
+const NEW_ARRIVALS_TEASER_IMAGES = ["assets/prettygirl w.jpg", "assets/prettygirl b.jpg"];
+
 // Paystack Configuration
 // NOTE: This is your LIVE public key — real transactions will be charged.
 // Switch to your pk_test_... key while you're still testing the flow.
@@ -361,9 +365,35 @@ function generateFeaturedCardHTML(product) {
   `;
 }
 
+// Placeholder cards shown in the "NEW ARRIVALS" shop filter until real
+// new-arrival products exist. Not clickable — just a teaser + tag.
+function generateComingSoonCardHTML() {
+  return NEW_ARRIVALS_TEASER_IMAGES.map(imgUrl => `
+    <div class="product-card coming-soon-card">
+      <div class="product-image-wrap">
+        <img src="${imgUrl}" alt="New Arrivals — Coming Soon" class="product-image" loading="lazy">
+        <span class="product-badge coming-soon-badge">COMING SOON</span>
+      </div>
+      <div class="product-info">
+        <span class="product-category">new arrivals</span>
+        <h3 class="product-name">Next Drop Loading</h3>
+        <p class="coming-soon-text">New pieces are on the way. Check back soon or join the newsletter to get notified first.</p>
+      </div>
+    </div>
+  `).join("");
+}
+
 function filterShopProducts(filter = "all") {
   const elShopGrid = document.getElementById("shop-products");
   if (!elShopGrid) return;
+
+  if (filter === "new") {
+    const newArrivals = PRODUCTS.filter(p => p.shopVisible !== false && p.category === "new");
+    elShopGrid.innerHTML = newArrivals.length
+      ? newArrivals.map(p => generateProductCardHTML(p)).join("")
+      : generateComingSoonCardHTML();
+    return;
+  }
 
   const filtered = PRODUCTS.filter(p => {
     if (p.shopVisible === false) return false;

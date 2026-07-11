@@ -193,6 +193,65 @@
       width: 100%;
       font-family: var(--font-body);
     }
+
+    /* ── Featured / New Arrivals notice ── */
+    .featured-notice {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin: 0.75rem 0 1.75rem;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--color-border);
+      background-color: var(--color-card-bg);
+      color: var(--color-text-muted);
+      font-family: var(--font-heading);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-align: center;
+      justify-content: center;
+    }
+
+    .featured-notice i {
+      font-size: 0.85rem;
+      color: var(--color-text);
+    }
+
+    /* ── "New Arrivals" coming-soon shop card ── */
+    .coming-soon-card {
+      cursor: default;
+    }
+
+    .coming-soon-card .product-image-wrap {
+      cursor: default;
+      position: relative;
+    }
+
+    .coming-soon-card .product-image {
+      filter: grayscale(40%) brightness(0.55);
+    }
+
+    .coming-soon-card .product-name {
+      cursor: default;
+    }
+
+    .coming-soon-badge {
+      background-color: var(--color-text);
+      color: var(--color-bg, #121212);
+      font-family: var(--font-heading);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      padding: 0.35rem 0.7rem;
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+    }
+
+    .coming-soon-text {
+      color: var(--color-text-muted);
+      font-size: 0.82rem;
+      line-height: 1.6;
+      margin-top: 0.5rem;
+    }
   </style>
 </head>
 
