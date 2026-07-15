@@ -175,18 +175,54 @@ const PRODUCTS = [
     featured: true,
     shopVisible: false
   },
-  {
+ {
     id: 16,
-    name: "MOTION Flower Edition (White)",
+    name: "MOTION crop version (black)",
+    price: 500.00,
+    category: "apparel",
+    image: "assets/pgirl w.jpg",
+    images: ["assets/pgirl w.jpg"],
+    sizing: ["S", "M", "L", "XL", "XXL"],
+    description: "A cropped black top with easy movement; bold, simple, and made to stand out.",
+    featured: true,
+    shopVisible: false
+  },
+  {
+    id: 17,
+    name: "MOTION crop version (white)",
+    price: 500.00,
+    category: "apparel",
+    image: "assets/ga2.jpg",
+    images: ["assets/flower w.jpg"],
+    sizing: ["S", "M", "L", "XL", "XXL"],
+    description: "A cropped white top with easy movement; clean, simple, and made to stand out.",
+    featured: true,
+    shopVisible: false
+  },
+ {
+    id: 18,
+    name: "Pretty girl with MOTION  (white)",
+    price: 500.00,
+    category: "apparel",
+    image: "assets/with motion w.jpg",
+    images: ["assets/flower w.jpg"],
+    sizing: ["S", "M", "L", "XL", "XXL"],
+    description: "A flowy white dress that moves with you; sleek, simple, and effortlessly chic.",
+    featured: true,
+    shopVisible: false
+  },
+  {
+    id: 19,
+    name: "Pretty girl with MOTION  (black)",
     price: 500.00,
     category: "apparel",
     image: "assets/new crop.jpg",
     images: ["assets/flower w.jpg"],
     sizing: ["S", "M", "L", "XL", "XXL"],
-    description: "Limited flower-print edition in white. Bold botanical detailing meets the signature MOTION silhouette.",
+    description: "Effortless black elegance with just the right amount of swing.",
     featured: true,
     shopVisible: false
-  },
+  }, 
 
 ];
 
