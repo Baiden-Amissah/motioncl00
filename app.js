@@ -175,6 +175,18 @@ const PRODUCTS = [
     featured: true,
     shopVisible: false
   },
+  {
+    id: 16,
+    name: "MOTION Flower Edition (White)",
+    price: 500.00,
+    category: "apparel",
+    image: "assets/new crop.jpg",
+    images: ["assets/flower w.jpg"],
+    sizing: ["S", "M", "L", "XL", "XXL"],
+    description: "Limited flower-print edition in white. Bold botanical detailing meets the signature MOTION silhouette.",
+    featured: true,
+    shopVisible: false
+  },
 
 ];
 
@@ -288,7 +300,7 @@ const GALLERY_IMAGES = [
   "assets/g1.jpg",
   "assets/g11.jpg",
   "assets/ga1.jpg",
-  "assets/ga2.jpg",
+  "assets/new crop.jpg",
   "assets/ga3.jpg",
   "assets/ga4.jpg",
 ];
